@@ -18,6 +18,7 @@ namespace SduniControls
         private Color textColorHover;
         private Color backgroundColorPush;
         private Color textColorPush;
+        private int borderWidth;
 
         public SduniButton() : base()
         {
@@ -38,6 +39,7 @@ namespace SduniControls
             this.backgroundColorPush = Color.FromArgb(153, 204, 255);
             this.textColorHover = Color.FromArgb(128, 128, 128); ;
             this.textColorPush = Color.FromArgb(128, 128, 128);
+            this.borderWidth = 1;
 
             this.MouseLeave += new EventHandler(_MouseLeave);
             this.MouseDown += new MouseEventHandler(_MouseDown);
@@ -203,9 +205,12 @@ namespace SduniControls
                 //BEGIN PAINT
                 using (GraphicsPath gborderDark = thePath)
                 {
-                    using (Pen p = new Pen(borderColor, 1))
+                    using (Pen p = new Pen(borderColor, this.borderWidth))
                     {
-                        g.DrawPath(p, gborderDark);
+                        //MessageBox.Show(this.borderWidth.ToString());
+                        if (this.borderWidth > 0) {
+                            g.DrawPath(p, gborderDark);
+                        }
                         SolidBrush br = new SolidBrush(backgroundColor);
                         g.FillPath(br, gborderDark);
                     }
@@ -349,7 +354,16 @@ namespace SduniControls
             set { this.bdRadius = value; }
         }
 
+        [Description("BorderWidth"),
+            Category("Darstellung"),
+            DefaultValue(1),
+            Browsable(true)]
+        public int BorderWidth
+        {
+            get { return this.borderWidth; }
+            set { this.borderWidth = value; }
+        }
+
 
     }
 }
-
